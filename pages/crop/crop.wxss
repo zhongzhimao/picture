@@ -1,0 +1,301 @@
+/**crop.wxss**/
+page {
+  background-color: #f8f8f8;
+}
+
+.container {
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* 头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 32rpx 32rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: white;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.8);
+  display: block;
+}
+
+/* 上传区域 */
+.upload-section {
+  margin: 32rpx;
+}
+
+.upload-area {
+  background: white;
+  border: 4rpx dashed #e0e0e0;
+  border-radius: 24rpx;
+  padding: 80rpx 40rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.upload-area:active {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.upload-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.upload-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.upload-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+}
+
+.image-preview {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.image-container {
+  width: 100%;
+  height: 400rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.image-info {
+  margin-bottom: 24rpx;
+}
+
+.info-item {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.change-btn {
+  background: #f5f5f5;
+  color: #333;
+  border: none;
+  border-radius: 50rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+}
+
+/* 工具区域 */
+.tools-section {
+  margin: 0 32rpx 32rpx;
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.tool-group {
+  margin-bottom: 40rpx;
+}
+
+.tool-group:last-child {
+  margin-bottom: 0;
+}
+
+.tool-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.tool-buttons {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.tool-btn {
+  flex: 1;
+  min-width: 140rpx;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 16rpx;
+  padding: 20rpx 16rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tool-btn:active {
+  background: #e9ecef;
+  transform: scale(0.95);
+}
+
+.tool-icon {
+  font-size: 32rpx;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.tool-label {
+  font-size: 22rpx;
+  color: #333;
+  display: block;
+}
+
+.scale-slider {
+  width: 100%;
+  margin-bottom: 16rpx;
+}
+
+.scale-value {
+  font-size: 24rpx;
+  color: #667eea;
+  font-weight: 500;
+  display: block;
+  text-align: center;
+}
+
+.crop-ratios {
+  display: flex;
+  gap: 12rpx;
+}
+
+.ratio-btn {
+  flex: 1;
+  background: #f5f5f5;
+  border: 3rpx solid transparent;
+  border-radius: 50rpx;
+  padding: 16rpx 24rpx;
+  font-size: 24rpx;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.ratio-btn.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  color: #667eea;
+  font-weight: 500;
+}
+
+/* 操作区域 */
+.action-section {
+  margin: 0 32rpx 32rpx;
+  display: flex;
+  gap: 16rpx;
+}
+
+.reset-btn, .apply-btn {
+  flex: 1;
+  border: none;
+  border-radius: 50rpx;
+  padding: 28rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.reset-btn {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.apply-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8rpx 16rpx rgba(102, 126, 234, 0.3);
+}
+
+/* 结果区域 */
+.result-section {
+  margin: 0 32rpx 32rpx;
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.result-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.success-badge {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  color: white;
+  font-size: 20rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 16rpx;
+  font-weight: 500;
+}
+
+.result-preview {
+  margin-bottom: 24rpx;
+}
+
+.result-image {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 16rpx;
+}
+
+.result-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.save-btn, .share-btn {
+  flex: 1;
+  border: none;
+  border-radius: 50rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  color: white;
+}
+
+.share-btn {
+  background: #f5f5f5;
+  color: #333;
+}

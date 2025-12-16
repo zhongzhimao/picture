@@ -1,0 +1,188 @@
+<!--vip.wxml-->
+<view class="container">
+  <!-- VIP状态卡片 -->
+  <view class="vip-status-card">
+    <view class="status-header">
+      <view class="vip-icon {{isVip ? 'active' : ''}}">
+        {{isVip ? '👑' : '🔒'}}
+      </view>
+      <view class="status-info">
+        <text class="status-title">{{isVip ? 'VIP会员' : '普通用户'}}</text>
+        <text class="status-desc">{{isVip ? '享受全部高级功能' : '升级VIP解锁更多功能'}}</text>
+      </view>
+    </view>
+    
+    <view class="status-details" wx:if="{{isVip}}">
+      <text class="expire-time">到期时间：{{expireTime}}</text>
+      <text class="remaining-days">剩余天数：{{remainingDays}}天</text>
+    </view>
+  </view>
+
+  <!-- VIP特权 -->
+  <view class="privileges-section">
+    <view class="section-title">VIP特权</view>
+    
+    <view class="privilege-list">
+      <view class="privilege-item">
+        <view class="privilege-icon">📦</view>
+        <view class="privilege-content">
+          <text class="privilege-title">批量处理</text>
+          <text class="privilege-desc">同时处理多张图片，提升效率</text>
+        </view>
+        <view class="privilege-value">¥9.9/月</view>
+      </view>
+      
+      <view class="privilege-item">
+        <view class="privilege-icon">💧</view>
+        <view class="privilege-content">
+          <text class="privilege-title">去除水印</text>
+          <text class="privilege-desc">智能识别并去除图片水印</text>
+        </view>
+        <view class="privilege-value">¥0.5/次</view>
+      </view>
+      
+      <view class="privilege-item">
+        <view class="privilege-icon">👤</view>
+        <view class="privilege-content">
+          <text class="privilege-title">证件照换底</text>
+          <text class="privilege-desc">一键更换证件照背景色</text>
+        </view>
+        <view class="privilege-value">¥2/次</view>
+      </view>
+      
+      <view class="privilege-item">
+        <view class="privilege-icon">🔧</view>
+        <view class="privilege-content">
+          <text class="privilege-title">AI修复老照片</text>
+          <text class="privilege-desc">智能修复模糊、褪色老照片</text>
+        </view>
+        <view class="privilege-value">¥3/次</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- VIP套餐 -->
+  <view class="packages-section">
+    <view class="section-title">选择套餐</view>
+    
+    <view class="package-list">
+      <view 
+        class="package-item {{selectedPackage === 'monthly' ? 'active' : ''}}" 
+        bindtap="selectPackage" 
+        data-package="monthly"
+      >
+        <view class="package-header">
+          <text class="package-name">月度会员</text>
+          <text class="package-price">¥9.9</text>
+        </view>
+        <text class="package-desc">30天VIP权限</text>
+        <view class="package-tag">热门</view>
+      </view>
+      
+      <view 
+        class="package-item {{selectedPackage === 'quarterly' ? 'active' : ''}}" 
+        bindtap="selectPackage" 
+        data-package="quarterly"
+      >
+        <view class="package-header">
+          <text class="package-name">季度会员</text>
+          <text class="package-price">¥26.9</text>
+        </view>
+        <text class="package-desc">90天VIP权限，省10%</text>
+        <view class="package-tag discount">省¥2.8</view>
+      </view>
+      
+      <view 
+        class="package-item {{selectedPackage === 'yearly' ? 'active' : ''}}" 
+        bindtap="selectPackage" 
+        data-package="yearly"
+      >
+        <view class="package-header">
+          <text class="package-name">年度会员</text>
+          <text class="package-price">¥89.9</text>
+        </view>
+        <text class="package-desc">365天VIP权限，省25%</text>
+        <view class="package-tag discount">省¥29</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分充值 -->
+  <view class="credits-section">
+    <view class="section-title">积分充值</view>
+    
+    <view class="credits-list">
+      <view 
+        class="credit-item {{selectedCredits === 5 ? 'active' : ''}}" 
+        bindtap="selectCredits" 
+        data-credits="5"
+      >
+        <text class="credit-amount">5积分</text>
+        <text class="credit-price">¥5</text>
+      </view>
+      
+      <view 
+        class="credit-item {{selectedCredits === 10 ? 'active' : ''}}" 
+        bindtap="selectCredits" 
+        data-credits="10"
+      >
+        <text class="credit-amount">10积分</text>
+        <text class="credit-price">¥9.5</text>
+        <view class="credit-tag">送0.5积分</view>
+      </view>
+      
+      <view 
+        class="credit-item {{selectedCredits === 20 ? 'active' : ''}}" 
+        bindtap="selectCredits" 
+        data-credits="20"
+      >
+        <text class="credit-amount">20积分</text>
+        <text class="credit-price">¥18</text>
+        <view class="credit-tag">送2积分</view>
+      </view>
+      
+      <view 
+        class="credit-item {{selectedCredits === 50 ? 'active' : ''}}" 
+        bindtap="selectCredits" 
+        data-credits="50"
+      >
+        <text class="credit-amount">50积分</text>
+        <text class="credit-price">¥45</text>
+        <view class="credit-tag">送5积分</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class="payment-section">
+    <view class="payment-info">
+      <text class="payment-label">当前余额：</text>
+      <text class="payment-credits">{{userData.credits}}积分</text>
+    </view>
+    
+    <button class="payment-btn" bindtap="handlePayment">
+      {{paymentText}}
+    </button>
+    
+    <text class="payment-tips">支持微信支付，安全便捷</text>
+  </view>
+
+  <!-- 使用记录 -->
+  <view class="usage-section">
+    <view class="section-title">使用记录</view>
+    
+    <view class="usage-list" wx:if="{{usageList.length > 0}}">
+      <view class="usage-item" wx:for="{{usageList}}" wx:key="index">
+        <view class="usage-info">
+          <text class="usage-feature">{{item.feature}}</text>
+          <text class="usage-time">{{item.time}}</text>
+        </view>
+        <text class="usage-cost">-{{item.cost}}积分</text>
+      </view>
+    </view>
+    
+    <view class="empty-usage" wx:else>
+      <text class="empty-text">暂无使用记录</text>
+    </view>
+  </view>
+</view>

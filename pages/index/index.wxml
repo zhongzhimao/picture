@@ -1,0 +1,113 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 头部banner -->
+  <view class="header-banner">
+    <view class="banner-content">
+      <text class="banner-title">微信图片工具箱（部分功能不完善，测试中）</text>
+      <text class="banner-subtitle">一站式解决图片处理需求</text>
+    </view>
+  </view>
+
+  <!-- 免费功能区域 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">免费功能</text>
+      <text class="section-desc">基础图片处理，完全免费</text>
+    </view>
+    
+    <view class="feature-grid">
+      <view class="feature-item" bindtap="navigateToFeature" data-feature="compress">
+        <view class="feature-icon">🗜️</view>
+        <text class="feature-title">图片压缩</text>
+        <text class="feature-desc">指定大小压缩</text>
+      </view>
+      
+      <view class="feature-item" bindtap="navigateToFeature" data-feature="convert">
+        <view class="feature-icon">🔄</view>
+        <text class="feature-title">格式转换</text>
+        <text class="feature-desc">JPG/PNG/WEBP</text>
+      </view>
+      
+      <view class="feature-item" bindtap="navigateToFeature" data-feature="crop">
+        <view class="feature-icon">✂️</view>
+        <text class="feature-title">裁剪旋转</text>
+        <text class="feature-desc">基础编辑功能</text>
+      </view>
+      
+      <view class="feature-item" bindtap="navigateToFeature" data-feature="grid">
+        <view class="feature-icon">⚏</view>
+        <text class="feature-title">九宫格切图</text>
+        <text class="feature-desc">朋友圈专用</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 高级功能区域 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">高级功能</text>
+      <text class="ad-badge">看广告解锁</text>
+    </view>
+    
+    <view class="feature-grid">
+      <view class="feature-item ad-feature" bindtap="navigateToFeature" data-feature="batch">
+        <view class="feature-icon">📦</view>
+        <text class="feature-title">批量处理</text>
+        <text class="feature-desc">5积分/次</text>
+      </view>
+      
+      <view class="feature-item ad-feature" bindtap="navigateToFeature" data-feature="watermark">
+        <view class="feature-icon">💧</view>
+        <text class="feature-title">去除水印</text>
+        <text class="feature-desc">3积分/次</text>
+      </view>
+      
+      <view class="feature-item ad-feature" bindtap="navigateToFeature" data-feature="idphoto">
+        <view class="feature-icon">👤</view>
+        <text class="feature-title">证件照换底</text>
+        <text class="feature-desc">4积分/次</text>
+      </view>
+      
+      <view class="feature-item ad-feature" bindtap="navigateToFeature" data-feature="repair">
+        <view class="feature-icon">🔧</view>
+        <text class="feature-title">AI修复老照片</text>
+        <text class="feature-desc">6积分/次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户状态卡片 -->
+  <view class="user-status-card">
+    <view class="status-header">
+      <image class="user-avatar {{!hasUserInfo ? 'not-logged-in' : ''}}" src="{{userInfo.avatarUrl}}" mode="aspectFill" bindtap="handleAvatarClick"></image>
+      <view class="user-info">
+        <text class="user-name {{hasUserInfo ? 'clickable' : ''}}" bindtap="handleNicknameClick">{{userInfo.nickName || '未登录'}}</text>
+        <text class="user-level">积分用户</text>
+      </view>
+      <button class="mini-btn ad-btn" bindtap="watchAdForCredits">看广告赚积分</button>
+    </view>
+    
+    <view class="status-info">
+      <view class="info-item">
+        <text class="info-label">积分余额</text>
+        <text class="info-value">{{userData.credits}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">使用次数</text>
+        <text class="info-value">{{totalUsage}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享按钮 -->
+  <view class="share-section">
+    <button class="share-btn" open-type="share">
+      <text class="share-icon">📤</text>
+      <text>分享给朋友</text>
+    </button>
+    <button class="share-btn timeline-btn" bindtap="shareToTimeline">
+      <text class="share-icon">⭕</text>
+      <text>分享到朋友圈</text>
+    </button>
+  </view>
+</view>

@@ -1,0 +1,131 @@
+<!--watermark.wxml-->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <text class="title">去除水印</text>
+    <text class="subtitle">智能识别并去除图片水印</text>
+  </view>
+
+  <!-- VIP提示 -->
+  <view class="vip-notice" wx:if="{{!isVip}}">
+    <view class="notice-icon">💎</view>
+    <view class="notice-content">
+      <text class="notice-title">VIP专属功能</text>
+      <text class="notice-desc">此功能需要VIP会员或0.5积分/次</text>
+    </view>
+    <button class="vip-btn" bindtap="goToVip">开通VIP</button>
+  </view>
+
+  <!-- 图片选择区域 -->
+  <view class="upload-section">
+    <view class="upload-area" bindtap="chooseImage" wx:if="{{!imageSrc}}">
+      <view class="upload-icon">💧</view>
+      <text class="upload-text">点击选择图片</text>
+      <text class="upload-desc">选择需要去除水印的图片</text>
+    </view>
+    
+    <view class="image-preview" wx:else>
+      <image src="{{imageSrc}}" mode="aspectFit" class="preview-image"></image>
+      <view class="image-info">
+        <text class="info-item">图片尺寸: {{imageDimensions}}</text>
+        <text class="info-item">当前积分: {{userData.credits}}</text>
+      </view>
+      <button class="change-btn" bindtap="chooseImage">重新选择</button>
+    </view>
+  </view>
+
+  <!-- 去除设置 -->
+  <view class="settings-section" wx:if="{{imageSrc}}">
+    <view class="setting-item">
+      <text class="setting-label">去除模式</text>
+      <view class="mode-options">
+        <button 
+          class="mode-btn {{removeMode === 'auto' ? 'active' : ''}}" 
+          bindtap="setRemoveMode" 
+          data-mode="auto"
+        >
+          <view class="mode-icon">🤖</view>
+          <text class="mode-name">智能识别</text>
+          <text class="mode-desc">自动识别水印</text>
+        </button>
+        
+        <button 
+          class="mode-btn {{removeMode === 'manual' ? 'active' : ''}}" 
+          bindtap="setRemoveMode" 
+          data-mode="manual"
+        >
+          <view class="mode-icon">✏️</view>
+          <text class="mode-name">手动选择</text>
+          <text class="mode-desc">框选水印区域</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="setting-item" wx:if="{{removeMode === 'auto'}}">
+      <text class="setting-label">识别精度</text>
+      <slider 
+        class="precision-slider" 
+        min="1" 
+        max="10" 
+        value="{{precision}}" 
+        bindchange="onPrecisionChange"
+        activeColor="#667eea"
+        backgroundColor="#e0e0e0"
+        block-size="20"
+      />
+      <text class="precision-value">精度等级: {{precision}}</text>
+    </view>
+
+    <view class="setting-item" wx:if="{{removeMode === 'manual'}}">
+      <text class="setting-label">选择水印区域</text>
+      <view class="selection-area">
+        <text class="selection-desc">在图片上框选需要去除的水印区域</text>
+        <button class="select-btn" bindtap="selectWatermarkArea">选择区域</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 费用提示 -->
+  <view class="cost-section" wx:if="{{imageSrc && !isVip}}">
+    <view class="cost-info">
+      <text class="cost-label">本次消费:</text>
+      <text class="cost-value">0.5积分</text>
+    </view>
+    <text class="cost-desc">当前余额: {{userData.credits}}积分</text>
+  </view>
+
+  <!-- 去除按钮 -->
+  <view class="action-section" wx:if="{{imageSrc}}">
+    <button class="remove-btn" bindtap="removeWatermark" disabled="{{removing}}">
+      {{removing ? '处理中...' : '开始去除水印'}}
+    </button>
+  </view>
+
+  <!-- 处理结果 -->
+  <view class="result-section" wx:if="{{processedSrc}}">
+    <view class="result-header">
+      <text class="result-title">处理完成</text>
+      <text class="success-badge">去除成功</text>
+    </view>
+    
+    <view class="result-comparison">
+      <view class="comparison-item">
+        <text class="comparison-label">原图</text>
+        <image src="{{imageSrc}}" mode="aspectFit" class="comparison-image"></image>
+      </view>
+      <view class="comparison-arrow">→</view>
+      <view class="comparison-item">
+        <text class="comparison-label">处理后</text>
+        <image src="{{processedSrc}}" mode="aspectFit" class="comparison-image"></image>
+      </view>
+    </view>
+    
+    <view class="result-actions">
+      <button class="save-btn" bindtap="saveImage">保存图片</button>
+      <button class="share-btn" bindtap="shareImage">分享图片</button>
+    </view>
+  </view>
+</view>
+
+<!-- 隐藏的canvas -->
+<canvas canvas-id="watermarkCanvas" style="position: fixed; top: -9999rpx; left: -9999rpx;"></canvas>

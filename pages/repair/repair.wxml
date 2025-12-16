@@ -1,0 +1,129 @@
+<!--repair.wxml-->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <text class="title">AI修复老照片</text>
+    <text class="subtitle">智能修复模糊、褪色老照片</text>
+  </view>
+
+  <!-- VIP提示 -->
+  <view class="vip-notice" wx:if="{{!isVip}}">
+    <view class="notice-icon">💎</view>
+    <view class="notice-content">
+      <text class="notice-title">VIP专属功能</text>
+      <text class="notice-desc">此功能需要VIP会员或3积分/次</text>
+    </view>
+    <button class="vip-btn" bindtap="goToVip">开通VIP</button>
+  </view>
+
+  <!-- 图片选择区域 -->
+  <view class="upload-section">
+    <view class="upload-area" bindtap="chooseImage" wx:if="{{!imageSrc}}">
+      <view class="upload-icon">🔧</view>
+      <text class="upload-text">点击选择老照片</text>
+      <text class="upload-desc">支持模糊、褪色、破损照片修复</text>
+    </view>
+    
+    <view class="image-preview" wx:else>
+      <image src="{{imageSrc}}" mode="aspectFit" class="preview-image"></image>
+      <button class="change-btn" bindtap="chooseImage">重新选择</button>
+    </view>
+  </view>
+
+  <!-- 修复设置 -->
+  <view class="settings-section" wx:if="{{imageSrc}}">
+    <view class="setting-item">
+      <text class="setting-label">修复类型</text>
+      <view class="repair-options">
+        <button 
+          class="repair-btn {{repairType === 'auto' ? 'active' : ''}}" 
+          bindtap="setRepairType" 
+          data-type="auto"
+        >
+          <view class="repair-icon">🤖</view>
+          <text class="repair-name">智能修复</text>
+          <text class="repair-desc">自动识别问题</text>
+        </button>
+        
+        <button 
+          class="repair-btn {{repairType === 'blur' ? 'active' : ''}}" 
+          bindtap="setRepairType" 
+          data-type="blur"
+        >
+          <view class="repair-icon">🔍</view>
+          <text class="repair-name">去模糊</text>
+          <text class="repair-desc">提升清晰度</text>
+        </button>
+        
+        <button 
+          class="repair-btn {{repairType === 'color' ? 'active' : ''}}" 
+          bindtap="setRepairType" 
+          data-type="color"
+        >
+          <view class="repair-icon">🎨</view>
+          <text class="repair-name">上色修复</text>
+          <text class="repair-desc">恢复色彩</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="setting-item">
+      <text class="setting-label">修复强度</text>
+      <slider 
+        class="intensity-slider" 
+        min="1" 
+        max="10" 
+        value="{{intensity}}" 
+        bindchange="onIntensityChange"
+        activeColor="#667eea"
+        backgroundColor="#e0e0e0"
+        block-size="20"
+      />
+      <text class="intensity-value">强度等级: {{intensity}}</text>
+    </view>
+  </view>
+
+  <!-- 费用提示 -->
+  <view class="cost-section" wx:if="{{imageSrc && !isVip}}">
+    <view class="cost-info">
+      <text class="cost-label">本次消费:</text>
+      <text class="cost-value">3积分</text>
+    </view>
+    <text class="cost-desc">当前余额: {{userData.credits}}积分</text>
+  </view>
+
+  <!-- 修复按钮 -->
+  <view class="action-section" wx:if="{{imageSrc}}">
+    <button class="repair-btn-main" bindtap="repairPhoto" disabled="{{repairing}}">
+      {{repairing ? '修复中...' : '开始AI修复'}}
+    </button>
+  </view>
+
+  <!-- 修复结果 -->
+  <view class="result-section" wx:if="{{repairedSrc}}">
+    <view class="result-header">
+      <text class="result-title">修复完成</text>
+      <text class="success-badge">AI修复成功</text>
+    </view>
+    
+    <view class="result-comparison">
+      <view class="comparison-item">
+        <text class="comparison-label">修复前</text>
+        <image src="{{imageSrc}}" mode="aspectFit" class="comparison-image"></image>
+      </view>
+      <view class="comparison-arrow">→</view>
+      <view class="comparison-item">
+        <text class="comparison-label">修复后</text>
+        <image src="{{repairedSrc}}" mode="aspectFit" class="comparison-image"></image>
+      </view>
+    </view>
+    
+    <view class="result-actions">
+      <button class="save-btn" bindtap="saveImage">保存图片</button>
+      <button class="share-btn" bindtap="shareImage">分享图片</button>
+    </view>
+  </view>
+</view>
+
+<!-- 隐藏的canvas -->
+<canvas canvas-id="repairCanvas" style="position: fixed; top: -9999rpx; left: -9999rpx;"></canvas>

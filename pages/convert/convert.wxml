@@ -1,0 +1,120 @@
+<!--convert.wxml-->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <text class="title">格式转换</text>
+    <text class="subtitle">支持JPG、PNG、WEBP格式互转</text>
+  </view>
+
+  <!-- 图片选择区域 -->
+  <view class="upload-section">
+    <view class="upload-area" bindtap="chooseImage" wx:if="{{!imageSrc}}">
+      <view class="upload-icon">🔄</view>
+      <text class="upload-text">点击选择图片</text>
+      <text class="upload-desc">支持JPG、PNG、WEBP格式</text>
+    </view>
+    
+    <view class="image-preview" wx:else>
+      <image src="{{imageSrc}}" mode="aspectFit" class="preview-image"></image>
+      <view class="image-info">
+        <text class="info-item">当前格式: {{currentFormat}}</text>
+        <text class="info-item">文件大小: {{fileSize}}</text>
+      </view>
+      <button class="change-btn" bindtap="chooseImage">重新选择</button>
+    </view>
+  </view>
+
+  <!-- 格式选择 -->
+  <view class="format-section" wx:if="{{imageSrc}}">
+    <view class="section-title">选择目标格式</view>
+    
+    <view class="format-options">
+      <button 
+        class="format-btn {{targetFormat === 'jpg' ? 'active' : ''}}" 
+        bindtap="setTargetFormat" 
+        data-format="jpg"
+      >
+        <view class="format-icon">🖼️</view>
+        <text class="format-name">JPG</text>
+        <text class="format-desc">适合照片</text>
+      </button>
+      
+      <button 
+        class="format-btn {{targetFormat === 'png' ? 'active' : ''}}" 
+        bindtap="setTargetFormat" 
+        data-format="png"
+      >
+        <view class="format-icon">🎨</view>
+        <text class="format-name">PNG</text>
+        <text class="format-desc">支持透明</text>
+      </button>
+      
+      <button 
+        class="format-btn {{targetFormat === 'webp' ? 'active' : ''}}" 
+        bindtap="setTargetFormat" 
+        data-format="webp"
+      >
+        <view class="format-icon">⚡</view>
+        <text class="format-name">WEBP</text>
+        <text class="format-desc">体积更小</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 质量设置 -->
+  <view class="quality-section" wx:if="{{imageSrc && targetFormat !== 'png'}}">
+    <view class="setting-item">
+      <text class="setting-label">图片质量</text>
+      <slider 
+        class="quality-slider" 
+        min="10" 
+        max="100" 
+        value="{{quality}}" 
+        bindchange="onQualityChange"
+        activeColor="#667eea"
+        backgroundColor="#e0e0e0"
+        block-size="20"
+      />
+      <text class="quality-value">{{quality}}%</text>
+    </view>
+  </view>
+
+  <!-- 转换按钮 -->
+  <view class="action-section" wx:if="{{imageSrc && targetFormat}}">
+    <button class="convert-btn" bindtap="convertImage" disabled="{{converting}}">
+      {{converting ? '转换中...' : '开始转换'}}
+    </button>
+  </view>
+
+  <!-- 转换结果 -->
+  <view class="result-section" wx:if="{{convertedSrc}}">
+    <view class="result-header">
+      <text class="result-title">转换完成</text>
+      <text class="success-badge">转换成功</text>
+    </view>
+    
+    <view class="result-preview">
+      <image src="{{compressedSrc}}" mode="aspectFit" class="result-image"></image>
+    </view>
+    
+    <view class="result-info">
+      <view class="info-row">
+        <text class="info-label">原始格式:</text>
+        <text class="info-value">{{currentFormat}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">转换格式:</text>
+        <text class="info-value">{{targetFormat.toUpperCase()}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">文件大小:</text>
+        <text class="info-value">{{convertedSize}}</text>
+      </view>
+    </view>
+    
+    <view class="result-actions">
+      <button class="save-btn" bindtap="saveImage">保存图片</button>
+      <button class="share-btn" bindtap="shareImage">分享图片</button>
+    </view>
+  </view>
+</view>
